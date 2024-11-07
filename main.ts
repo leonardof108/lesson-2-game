@@ -57,43 +57,43 @@
 
 // dash mechanic
 
-let projectile: Sprite = null
-let direction = 0
-let movingLeft = false
-// let prevSpeed = 0
-let dashing = false
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    movingLeft = true
-})
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    movingLeft = false
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(dashing)) {
-        dashing = true
-        // prevSpeed = hero.vx
-        controller.moveSprite(hero, 0, 0)
-        if (movingLeft) {
-            direction = -1
-        } else {
-            direction = 1
-        }
-        hero.setVelocity(direction * 200, 0)
-        for (let index = 0; index <= 3; index++) {
-            timer.background(function () {
-                projectile = sprites.createProjectileFromSprite(hero.image, hero, 0 - direction * 5, 0)
-                projectile.lifespan = 40
-            })
-            pause(20)
-        }
-        timer.after(50, function () {
-            // hero.vx = prevSpeed
-            hero.vx = 0
-            controller.moveSprite(hero, 50, 0)
-            dashing = false
-        })
-    }
-})
+// let projectile: Sprite = null
+// let direction = 0
+// let movingLeft = false
+// // let prevSpeed = 0
+// let dashing = false
+// controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+//     movingLeft = true
+// })
+// controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+//     movingLeft = false
+// })
+// controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+//     if (!(dashing)) {
+//         dashing = true
+//         // prevSpeed = hero.vx
+//         controller.moveSprite(hero, 0, 0)
+//         if (movingLeft) {
+//             direction = -1
+//         } else {
+//             direction = 1
+//         }
+//         hero.setVelocity(direction * 200, 0)
+//         for (let index = 0; index <= 3; index++) {
+//             timer.background(function () {
+//                 projectile = sprites.createProjectileFromSprite(hero.image, hero, 0 - direction * 5, 0)
+//                 projectile.lifespan = 40
+//             })
+//             pause(20)
+//         }
+//         timer.after(50, function () {
+//             // hero.vx = prevSpeed
+//             hero.vx = 0
+//             controller.moveSprite(hero, 50, 0)
+//             dashing = false
+//         })
+//     }
+// })
 
 // variables
 let hero = sprites.create(assets.image`heroBase0`, SpriteKind.Player)
@@ -102,13 +102,13 @@ let heroJumpHeight = 20
 let heroJumpVelocity = 0 - Math.sqrt(2 * (gravity * heroJumpHeight))
 let doubleJump = true
 let jumpNum = 0
-// let dashAfterImage: Sprite = null
-// let dashDirection = 0
-// let isDashing = false
-// let isUpPressed = false
-// let isDownPressed = false
-// let isFacingLeft = characterAnimations.matchesRule(hero, Predicate.FacingLeft)
-// let isFacingRight = characterAnimations.matchesRule(hero, Predicate.FacingRight)
+let dashAfterImage: Sprite = null
+let dashDirection = 0
+let isDashing = false
+let isUpPressed = false
+let isDownPressed = false
+let isFacingLeft = characterAnimations.matchesRule(hero, Predicate.FacingLeft)
+let isFacingRight = characterAnimations.matchesRule(hero, Predicate.FacingRight)
 hero.ay = gravity
 
 scene.cameraFollowSprite(hero)
@@ -132,76 +132,76 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
         hero.vy = 0
     }
 })
-// controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-//     if (!isDashing) {
-//         isDashing = true
-//         controller.moveSprite(hero, 0, 0)
-//         if (isFacingRight && !isUpPressed && !isDownPressed) {
-//             hero.setVelocity(1 * 200, 0)
-//         } else if (isFacingLeft && !isUpPressed && !isDownPressed) {
-//             hero.setVelocity(-1 * 200, 0)
-//         } else if (isUpPressed && !isDownPressed) {
-//             hero.setVelocity(0, 1 * 200)
-//         } else if (!isUpPressed && isDownPressed) {
-//             hero.setVelocity(0, -1 * 200)
-//         }
-//         /* {
-//             if (isFacingLeft) {
-//                 dashDirection = -1
-//             } else if (isFacingRight) {
-//                 dashDirection = 1
-//             }
-//         } */
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!isDashing) {
+        isDashing = true
+        controller.moveSprite(hero, 0, 0)
+        if (isFacingRight && !isUpPressed && !isDownPressed) {
+            hero.setVelocity(1 * 200, 0)
+        } else if (isFacingLeft && !isUpPressed && !isDownPressed) {
+            hero.setVelocity(-1 * 200, 0)
+        } else if (isUpPressed && !isDownPressed) {
+            hero.setVelocity(0, 1 * 200)
+        } else if (!isUpPressed && isDownPressed) {
+            hero.setVelocity(0, -1 * 200)
+        }
+        /* {
+            if (isFacingLeft) {
+                dashDirection = -1
+            } else if (isFacingRight) {
+                dashDirection = 1
+            }
+        } */
 
-//         hero.setVelocity(dashDirection * 200, 0)
+        hero.setVelocity(dashDirection * 200, 0)
 
-//         timer.after(100, function () {
-//             hero.vx = 0
-//             hero.vy = 0
-//             controller.moveSprite(hero, 50, 0)
-//             isDashing = false
-//         })
-//     }
-// })
-// function makeDashAfterImage() {
-//     for (let index = 0; index <= 3; index++) {
-//         timer.background(function () {
-//             dashAfterImage = sprites.createProjectileFromSprite(
-//                 hero.image,
-//                 hero,
-//                 0 - dashDirection * 5,
-//                 0
-//             )
-//             dashAfterImage.lifespan = 40
-//         })
-//         pause(20)
-//     }
-// }
-// function defineDashX() {
-//     if (isDownPressed || isUpPressed) {
-//         dashDirection = 0
-//     } else {
-//         if (isFacingLeft) {
-//             dashDirection = -1
-//         } else if (isFacingRight) {
-//             dashDirection = 1
-//         }
-//     }
-//     return dashDirection
-// }
-// function defineDashY() {}
-// controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-//     isUpPressed = true
-// })
-// controller.up.onEvent(ControllerButtonEvent.Released, function () {
-//     isUpPressed = false
-// })
-// controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-//     isDownPressed = true
-// })
-// controller.down.onEvent(ControllerButtonEvent.Released, function () {
-//     isDownPressed = false
-// })
+        timer.after(100, function () {
+            hero.vx = 0
+            hero.vy = 0
+            controller.moveSprite(hero, 50, 0)
+            isDashing = false
+        })
+    }
+})
+function makeDashAfterImage() {
+    for (let index = 0; index <= 3; index++) {
+        timer.background(function () {
+            dashAfterImage = sprites.createProjectileFromSprite(
+                hero.image,
+                hero,
+                0 - dashDirection * 5,
+                0
+            )
+            dashAfterImage.lifespan = 40
+        })
+        pause(20)
+    }
+}
+function defineDashX() {
+    if (isDownPressed || isUpPressed) {
+        dashDirection = 0
+    } else {
+        if (isFacingLeft) {
+            dashDirection = -1
+        } else if (isFacingRight) {
+            dashDirection = 1
+        }
+    }
+    return dashDirection
+}
+function defineDashY() {}
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    isUpPressed = true
+})
+controller.up.onEvent(ControllerButtonEvent.Released, function () {
+    isUpPressed = false
+})
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    isDownPressed = true
+})
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    isDownPressed = false
+})
 
 // test
 
@@ -352,4 +352,11 @@ game.onUpdate(() => {
     if (hero.isHittingTile(CollisionDirection.Bottom)) {
         jumpNum = 0
     }
+})
+
+let pixs = [img`1`, img`1`, img`1`, img`1`, img`1`]
+let x = 16
+pixs.forEach(function (img) {
+    let sprt = sprites.create(img)
+    sprt.setPosition(x+=16, 16)
 })
